@@ -13,18 +13,28 @@ window.onload = function() {
 //    drawPaddle(cfg.paddleA.x,cfg.paddleA.y,cfg.paddleA.width,cfg.paddleA.height,canvas);
 //    drawPaddle(cfg.paddleB.x,cfg.paddleB.y,cfg.paddleB.width,cfg.paddleB.height,canvas);
     main(canvas);
-    
 }
 
 function animate(event){
         if (event.key == "ArrowUp" || event.key == "ArrowDown"){
-            val = event.keyCode - 39; // makes val = -1 for ArrowUp and +1 for ArrowDown
-            movement = 5 * val;
-            PaddleA.y += movement;
-            console.log(PaddleA.y);
-            draw(PaddleA);
+            isDown = event.keyCode - 39; // makes val = -1 for ArrowUp and +1 for ArrowDown
+            if (isDown > 0 && PaddleA.y+PaddleA.height < window.innerHeight-5){
+                movement = 5 * isDown;
+                PaddleA.y += movement;
+                redraw(PaddleA);
+            }
+
+            else if (isDown < 0 && PaddleA.y > 5){
+                movement = 5 * isDown;
+                PaddleA.y += movement;
+                redraw(PaddleA);
+            }
         }
 
+}
+
+function spawnPellet(){
+//    pellet = 
 }
 
 function redraw(shapeObj){
