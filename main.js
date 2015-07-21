@@ -10,27 +10,31 @@ window.onload = function() {
     initPaddles();
     draw(PaddleA,canvas);
     draw(PaddleB,canvas);
-//    drawPaddle(cfg.paddleA.x,cfg.paddleA.y,cfg.paddleA.width,cfg.paddleA.height,canvas);
-//    drawPaddle(cfg.paddleB.x,cfg.paddleB.y,cfg.paddleB.width,cfg.paddleB.height,canvas);
+    
     main(canvas);
 }
 
 function animate(event){
-        if (event.key == "ArrowUp" || event.key == "ArrowDown"){
+        if (event.keyCode == 38 || event.keyCode == 40){
             isDown = event.keyCode - 39; // makes val = -1 for ArrowUp and +1 for ArrowDown
-            if (isDown > 0 && PaddleA.y+PaddleA.height < window.innerHeight-5){
-                movement = 5 * isDown;
+            if (isDown > 0) {
+                if (PaddleA.y+PaddleA.height < window.innerHeight-5)
+                    movement = 5 * isDown;
+                else                 
+                    movement = window.innerHeight - (PaddleA.y + PaddleA.height);
                 PaddleA.y += movement;
                 redraw(PaddleA);
             }
 
-            else if (isDown < 0 && PaddleA.y > 5){
-                movement = 5 * isDown;
+            else if (isDown < 0){
+                if (PaddleA.y > 5)
+                    movement = 5 * isDown;
+                else                 
+                    movement = - PaddleA.y;
                 PaddleA.y += movement;
                 redraw(PaddleA);
             }
         }
-
 }
 
 function spawnPellet(){
@@ -90,6 +94,5 @@ function draw(shapeObj, canvasObj) {
 }
 
 function main(gameCanvas) {
-    console.log("i'm here.");
-    document.addEventListener("keypress",animate);
+    document.addEventListener('keydown',animate);
 };
