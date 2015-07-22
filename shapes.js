@@ -5,7 +5,7 @@
 // Circle's constuctors allows me to inherit all of the properties from
 // Shape in the new Rectangle or Circle.
 
-var Shape = function(){
+Shape = function(){
     this.pos = {
         x: this.x,
         y: this.y
@@ -15,14 +15,14 @@ var Shape = function(){
 };
 
 Shape.prototype.draw = function(canvas){
-    this.canvas = new Canvas(
+//    this.canvas = new Canvas()
 }
 
-var Rectangle = function(width,height){
+Rectangle = function(width,height){
     Shape.call(this);
     this.dims = {
-        this.width: width,
-        this.height: height
+        width: width,
+        height: height
     };
 };
 

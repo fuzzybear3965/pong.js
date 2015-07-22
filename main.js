@@ -1,41 +1,20 @@
 window.onload = function() {
     var viewWidth = window.innerWidth;
     var viewHeight = window.innerHeight;
-    
-    PaddleA = new Paddle();
-    PaddleB = new Paddle();
-    
-    draw(PaddleA,canvas);
-    draw(PaddleB,canvas);
-    
-    main(canvas);
+    players = createPlayers();
+    createCanvases(players);
+    //document.addEventListener('keydown',animate);
 }
 
-function animate(event){
-        if (event.keyCode == 38 || event.keyCode == 40){
-            isDown = event.keyCode - 39; // makes val = -1 for ArrowUp and +1 for ArrowDown
-            if (isDown > 0) {
-                if (PaddleA.y+PaddleA.height < window.innerHeight-5)
-                    movement = 5 * isDown;
-                else                 
-                    movement = window.innerHeight - (PaddleA.y + PaddleA.height);
-                PaddleA.y += movement;
-                redraw(PaddleA);
-            }
-
-            else if (isDown < 0){
-                if (PaddleA.y > 5)
-                    movement = 5 * isDown;
-                else                 
-                    movement = - PaddleA.y;
-                PaddleA.y += movement;
-                redraw(PaddleA);
-            }
-        }
+function createPlayers(){
+    playerA = new Player(0,'A');
+    playerB = new Player(0,'B');
+    return [playerA, playerB];
 }
-
-function spawnPellet(){
-//    pellet = 
+    
+function createCanvases(){
+    paddleAcanvas = new Canvas('paddle-a',playerA.x,playerA.y,playerA.width,playerA.height);
+    paddleBcanvas = new Canvas('paddle-b',playerB.x,playerB.y,playerB.width,playerB.height);
 }
 
 function redraw(shapeObj){
@@ -60,28 +39,6 @@ function initPaddles(){
     PaddleB.y = .5*(viewHeight-PaddleB.height);    
 }
 
-function Player(id) {
-    this.name = id,
-    this.score,
-    this.paddle = new Paddle();
-}
-
-function Paddle() {
-    this.x,
-    this.y,
-    this.width,
-    this.height
-}
-
-function Canvas(width, height, id) {
-    this.canvasEl = document.getElementById(id);
-//    this.canvasEl.width = width;
-//    this.canvasEl.height = height;
-    this.canvasEl.width = width;
-    this.canvasEl.height = height;
-    this.canvasID = id;
-}
-
 function draw(shapeObj, canvasObj) {
     if (canvasObj.canvasEl.getContext) {
         var context = canvasObj.canvasEl.getContext('2d'); 
@@ -89,7 +46,3 @@ function draw(shapeObj, canvasObj) {
         context.fillRect(shapeObj.x,shapeObj.y,shapeObj.width,shapeObj.height);
    }
 }
-
-function main(gameCanvas) {
-    document.addEventListener('keydown',animate);
-};
