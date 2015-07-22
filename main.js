@@ -1,6 +1,6 @@
 window.onload = function() {
     new Paddle();
-//    viewWidth = document.documentElement.clientWidth;
+    var viewWidth = document.documentElement.clientWidth;
     viewWidth = window.innerWidth;
     viewHeight = document.documentElement.clientHeight;//window.innerHeight;
     var canvas = new Canvas(viewWidth,viewHeight,'paddle-canvas');
