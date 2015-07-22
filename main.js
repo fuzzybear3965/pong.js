@@ -1,13 +1,10 @@
 window.onload = function() {
-    new Paddle();
-    var viewWidth = document.documentElement.clientWidth;
-    viewWidth = window.innerWidth;
-    viewHeight = document.documentElement.clientHeight;//window.innerHeight;
-    var canvas = new Canvas(viewWidth,viewHeight,'paddle-canvas');
+    var viewWidth = window.innerWidth;
+    var viewHeight = window.innerHeight;
+    
     PaddleA = new Paddle();
     PaddleB = new Paddle();
-   
-    initPaddles();
+    
     draw(PaddleA,canvas);
     draw(PaddleB,canvas);
     
