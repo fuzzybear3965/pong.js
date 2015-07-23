@@ -1,20 +1,21 @@
-var Canvas = function(domid,x,y,width,height){
-    this.dims = {x : x, y : y};
-    this.width = width;
-    this.height = height;
+var Canvas = function(domid,pos,dims){
+    this.dims = dims;
+    this.pos = pos;
     this.canvasElement = document.getElementById(domid);
     this.canvasContext = this.canvasElement.getContext("2d");
-    if (x != 0 && y != 0) {
-        this.canvasContext.translate(x,y);
+    if (dims.x != 0 && dims.y != 0) {
+    this.canvasElement.width = this.dims.width;
+    this.canvasElement.height = viewHeight;
+        this.canvasContext.translate(dims.x,dims.y);
     };
+};
 
-Canvas.prototype.draw = function(shapeObj){
-    this.shape = shapeObj;
-    this.canvasEl = document.getElementById(this.canvasId);
-    if (this.canvasEl.getContext) {
-        this.context = this.canvasEl.getContext('2d'); 
+Canvas.prototype.draw = function(posObj,dimsObj){
+    if (this.canvasElement.getContext) {
+        this.context = this.canvasElement.getContext('2d'); 
         this.context.clearRect(0,0,window.innerWidth,window.innerHeight);
-        this.context.fillStyle = "#00F";
-        this.context.fillRect(shapeObj.x,shapeObj.y,shapeObj.width,shapeObj.height);
+        this.context.fillStyle = "#F00";
+        console.log('x',posObj.x,' y',posObj.y,' width',dimsObj.width,' height',dimsObj.height);
+        this.context.fillRect(posObj.x,posObj.y,dimsObj.width,dimsObj.height);
    }
-}
+};

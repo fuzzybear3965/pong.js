@@ -1,9 +1,9 @@
-Paddle = function(){
+Paddle = function(name,posinit){
+    this.name = name; // TODO: Allow name to be undefined with an if condition.
     Rectangle.call(this);
-    this.x = 0; // TODO: Maybe let them move in the x-direction?
-    this.y = window.innerHeight; // TODO: Get the document height from some other scope
-    this.width = 20; // TODO: Should I add this as a constructor argument?
-    this.height = 100; // TODO: Same as above
+    this.score = 0;
+    this.pos = {x: posinit.x, y: posinit.y};
+    this.dims = {width: 10, height: 100}; // TODO: Should I add this as a constructor argument?
 };
 
 Paddle.prototype = Object.create(Rectangle.prototype); // Paddle extends Rectangle
