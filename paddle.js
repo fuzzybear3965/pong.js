@@ -30,3 +30,13 @@ Paddle.prototype.move = function(event){
         draw(this); // TODO: Implement this draw function somehow
     }
 }
+
+Canvas.prototype.draw = function(posObj,dimsObj){
+    if (this.canvasElement.getContext) {
+        this.context = this.canvasElement.getContext('2d'); 
+        this.context.clearRect(0,0,dimsObj.width,dimsObj.height);
+        this.context.fillStyle = "#F00";
+        console.log('x',posObj.x,' y',posObj.y,' width',dimsObj.width,' height',dimsObj.height);
+        this.context.fillRect(posObj.x,posObj.y,dimsObj.width,dimsObj.height);
+   }
+};

@@ -1,16 +1,16 @@
-// TODO: Change all instances of player/Player references to
+// TODO: Change all instances of paddle/Paddle references to
 // paddle/Paddle 
 
 window.onload = function() {
     viewWidth = window.innerWidth; // GLOBAL
     viewHeight = window.innerHeight; // GLOBAL
-    players = createPlayers();
-    canvases = createCanvases(players);
-    canvases.playerAcanvas.draw(players.paddleA.pos,players.paddleA.dims);
+    //var paddles = createPaddles();
+    var paddleA = new Paddle('A', {x:0,y:viewHeight*.5});
+    var canvasA = new Canvas('paddle-a',{x:0,y:0},{width:10,height:viewHeight});
     //document.addEventListener('keydown',animate);
 }
 
-function createPlayers(){
+function createPaddles(){
     initApos = {x:0,y:viewHeight*.5};
     initBpos = {x:viewWidth-20,y:viewHeight*.5};
     paddleA = new Paddle('A',initApos);
@@ -19,21 +19,21 @@ function createPlayers(){
             paddleB: paddleB};
 }
     
-function createCanvases(playersObj){
-    canvasAdims = {width: playersObj.paddleA.dims.width,
-    height: playersObj.paddleA.dims.height};
-    canvasApos = {x: playersObj.paddleA.pos.x,
-        y: playersObj.paddleA.pos.y};
+function createCanvases(paddlesObj){
+    canvasAdims = {width: paddlesObj.paddleA.dims.width,
+    height: paddlesObj.paddleA.dims.height};
+    canvasApos = {x: paddlesObj.paddleA.pos.x,
+        y: paddlesObj.paddleA.pos.y};
     
-    canvasBdims = {width: playersObj.paddleB.dims.width,
-    height: playersObj.paddleB.dims.height};
-    canvasBpos = {x: playersObj.paddleB.pos.x,
-        y: playersObj.paddleB.pos.y};
+    canvasBdims = {width: paddlesObj.paddleB.dims.width,
+    height: paddlesObj.paddleB.dims.height};
+    canvasBpos = {x: paddlesObj.paddleB.pos.x,
+        y: paddlesObj.paddleB.pos.y};
     // TODO: Maybe the above can be simplified??
-    playerAcanvas = new Canvas('paddle-a',canvasApos,canvasAdims);
-    playerBcanvas = new Canvas('paddle-b',canvasBpos,canvasBdims);
-    return {playerAcanvas: playerAcanvas, 
-        playerBcanvas: playerBcanvas};
+    paddleAcanvas = new Canvas('paddle-a',canvasApos,canvasAdims);
+    paddleBcanvas = new Canvas('paddle-b',canvasBpos,canvasBdims);
+    return {paddleAcanvas: paddleAcanvas, 
+        paddleBcanvas: paddleBcanvas};
 
 }
 
