@@ -6,5 +6,4 @@ var Pellet = function(speed,direction) {
                                           //self-invoking function is run after new is called) 
 }
 
-Pellet.prototype = Object.create(Circle.prototype); // Pellet extends Circle
 Pellet.prototype.constructor = Pellet; // Pellet has its own constructor

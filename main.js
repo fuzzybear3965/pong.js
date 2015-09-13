@@ -1,68 +1,68 @@
-// TODO: Change all instances of paddle/Paddle references to
-// paddle/Paddle 
-
 window.onload = function() {
     viewWidth = window.innerWidth; // GLOBAL
     viewHeight = window.innerHeight; // GLOBAL
-    //var paddles = createPaddles();
-    var paddleA = new Paddle('A', {x:0,y:viewHeight*.5});
-    var canvasA = new Canvas('paddle-a',{x:0,y:0},{width:10,height:viewHeight});
-    //document.addEventListener('keydown',animate);
-}
+    var canvases = createCanvases();
+    var paddles = createPaddles(canvases);
 
-function createPaddles(){
-    initApos = {x:0,y:viewHeight*.5};
-    initBpos = {x:viewWidth-20,y:viewHeight*.5};
-    paddleA = new Paddle('A',initApos);
-    paddleB = new Paddle('B',initBpos); // TODO: get rid of the constant '20' in the x position
-    return {paddleA: paddleA,
-            paddleB: paddleB};
-}
-    
-function createCanvases(paddlesObj){
-    canvasAdims = {width: paddlesObj.paddleA.dims.width,
-    height: paddlesObj.paddleA.dims.height};
-    canvasApos = {x: paddlesObj.paddleA.pos.x,
-        y: paddlesObj.paddleA.pos.y};
-    
-    canvasBdims = {width: paddlesObj.paddleB.dims.width,
-    height: paddlesObj.paddleB.dims.height};
-    canvasBpos = {x: paddlesObj.paddleB.pos.x,
-        y: paddlesObj.paddleB.pos.y};
+    var progress = 0;
+    var canvasElement = document.getElementById('pellet');
+    canvasElement.width = viewWidth;
+    canvasElement.height = viewHeight;
+    canvasElement.style.top = "0px";
+    canvasElement.style.left = "0px";
+    canvasElement.style.position = "absolute";
+    var ctx = canvasElement.getContext("2d");
+    ctx.arc(100,100,10,0,2*Math.PI);
+    ctx.fill();
+    var id = setInterval(function() {
+        progress += .1;
+        ctx.clearRect(0,0,canvasElement.width,canvasElement.height);
+        ctx.arc(100+2*100*progress,100+2*100*progress,10,0,2*Math.PI);
+        ctx.fill();
+        if (Math.round(progress*10)/10 == 1) {
+            clearInterval(id);
+        };
+    },500);
+
+    document.addEventListener('keydown', function(){
+        keyFunction(event,paddles);
+    });
+};
+
+function createCanvases(){
+    var canvasAdims = {width: 10, height: viewHeight};
+    var canvasApos = {x: 5, y: 0};
+
+    var canvasBdims = {width: 10, height: viewHeight};
+    var canvasBpos = {x: viewWidth-10-5, y: 0}; // Give the canvas a 5 pixel margin
+
     // TODO: Maybe the above can be simplified??
-    paddleAcanvas = new Canvas('paddle-a',canvasApos,canvasAdims);
-    paddleBcanvas = new Canvas('paddle-b',canvasBpos,canvasBdims);
-    return {paddleAcanvas: paddleAcanvas, 
-        paddleBcanvas: paddleBcanvas};
+    var canvasA = new Canvas('paddle-a',canvasApos,canvasAdims);
+    var canvasB = new Canvas('paddle-b',canvasBpos,canvasBdims);
 
-}
+    return {canvasA: canvasA, canvasB: canvasB};
+};
 
-function redraw(shapeObj){
-    canvas = document.getElementById('paddle-canvas');
-    if (canvas.getContext) {
-        var context = canvas.getContext('2d'); 
-        context.clearRect(0,0,window.innerWidth,window.innerHeight);
-        context.fillStyle = "#00F";
-        context.fillRect(shapeObj.x,shapeObj.y,shapeObj.width,shapeObj.height);
-   }
-}
+function createPaddles(canvasObj){
+    var initApos = {x:0,y:viewHeight*.5};
+    var initBpos = {x:0,y:viewHeight*.5};
+    var paddleA = new Paddle(canvasObj.canvasA,initApos);
+    var paddleB = new Paddle(canvasObj.canvasB,initBpos); 
+    return {paddleA: paddleA, paddleB: paddleB};
+};
 
-function initPaddles(){
-    PaddleA.width = cfg.paddleA.width;
-    PaddleA.height = .2*viewHeight;
-    PaddleA.x = 10;
-    PaddleA.y = .5*(viewHeight-PaddleA.height);    
+function keyFunction(event,paddleObj){
+    //TODO: Use a data structure to keep track of the keys so that
+    //different players can hold down keys at the same time.
+    keyStruck = event.which || event.keyCode; // cross-browser solution from w3schools
+    // TODO: generalize the events, below, so that each player gets their own keys
+    if (keyStruck == 38 || keyStruck == 40){
+        var paddleA = paddleObj.paddleA;
+        paddleA.move(event);    
+    }
 
-    PaddleB.width = cfg.paddleB.width;
-    PaddleB.height = .2*viewHeight;
-    PaddleB.x = viewWidth - PaddleB.width - 10;
-    PaddleB.y = .5*(viewHeight-PaddleB.height);    
-}
-
-function draw(shapeObj, canvasObj) {
-    if (canvasObj.canvasEl.getContext) {
-        var context = canvasObj.canvasEl.getContext('2d'); 
-        context.fillStyle = "#00F";
-        context.fillRect(shapeObj.x,shapeObj.y,shapeObj.width,shapeObj.height);
-   }
-}
+    else if (keyStruck == 87 || keyStruck == 83){
+        var paddleB = paddleObj.paddleB;
+        paddleB.move(event);    
+    }
+};
