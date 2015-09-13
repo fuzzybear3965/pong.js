@@ -1,35 +1,16 @@
 window.onload = function() {
-    viewWidth = window.innerWidth; // GLOBAL
-    viewHeight = window.innerHeight; // GLOBAL
+    initLayout();
+};
+
+function initLayout(){
     var canvases = createCanvases();
     var paddles = createPaddles(canvases);
-
-    var progress = 0;
-    var canvasElement = document.getElementById('pellet');
-    canvasElement.width = viewWidth;
-    canvasElement.height = viewHeight;
-    canvasElement.style.top = "0px";
-    canvasElement.style.left = "0px";
-    canvasElement.style.position = "absolute";
-    var ctx = canvasElement.getContext("2d");
-    ctx.arc(100,100,10,0,2*Math.PI);
-    ctx.fill();
-    var id = setInterval(function() {
-        progress += .1;
-        ctx.clearRect(0,0,canvasElement.width,canvasElement.height);
-        ctx.arc(100+2*100*progress,100+2*100*progress,10,0,2*Math.PI);
-        ctx.fill();
-        if (Math.round(progress*10)/10 == 1) {
-            clearInterval(id);
-        };
-    },500);
-
-    document.addEventListener('keydown', function(){
-        keyFunction(event,paddles);
-    });
+    var pellet = new Pellet(paddles);
 };
 
 function createCanvases(){
+    var viewHeight = window.innerHeight;
+    var viewWidth = window.innerWidth;
     var canvasAdims = {width: 10, height: viewHeight};
     var canvasApos = {x: 5, y: 0};
 
@@ -44,11 +25,20 @@ function createCanvases(){
 };
 
 function createPaddles(canvasObj){
+    var viewHeight = window.innerHeight;
     var initApos = {x:0,y:viewHeight*.5};
     var initBpos = {x:0,y:viewHeight*.5};
     var paddleA = new Paddle(canvasObj.canvasA,initApos);
-    var paddleB = new Paddle(canvasObj.canvasB,initBpos); 
-    return {paddleA: paddleA, paddleB: paddleB};
+    var paddleB = new Paddle(canvasObj.canvasB,initBpos);
+   
+    var paddles = {paddleA: paddleA, paddleB: paddleB};
+
+    document.addEventListener('keydown', function(){
+        keyFunction(event,paddles);
+    });
+
+    return paddles ;
+
 };
 
 function keyFunction(event,paddleObj){
