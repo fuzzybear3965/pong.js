@@ -1,0 +1,25 @@
+{
+  "name": "pong",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fuzzybear3965/pong.js.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fuzzybear3965/pong.js/issues"
+  },
+  "homepage": "https://github.com/fuzzybear3965/pong.js#readme",
+  "dependencies": {
+    "eslint": "^5.14.1"
+  }
+}
