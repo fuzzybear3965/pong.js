@@ -1,6 +1,7 @@
 (function () {
   var start = performance.now();
 
+  // var viewWidth = window.innerWidth;
   var viewWidth = window.innerWidth;
   var viewHeight = window.innerHeight;
 
@@ -36,10 +37,9 @@
 
   init();
 
-  function step(timestamp) {
+  function step() {
     // // move ball at 1 px / ms
-    var deltaT = Math.floor(timestamp - start); // number of milliseconds
-    moveBall(ball, deltaT);
+    moveBall();
     movePaddle(leftPaddle);
     movePaddle(rightPaddle);
     initKeys();
@@ -49,12 +49,11 @@
       drawPaddle(rightPaddle);
     }
     if (hasExited()) {
-      if (ball.x < leftPaddle.x) {
-        score.r += 1;
-      } else {
+      if (ball.x + ball.r >= rightPaddle.x) {
         score.l += 1;
+      } else {
+        score.r += 1;
       }
-
       init();
       return;
     }
@@ -78,13 +77,13 @@
     drawPaddle(paddle);
   }
 
-  function moveBall(ball) {
+  function moveBall() {
     // remove old ball
     clearBall();
     // update ball position
     ball.x += ball.vx;
     ball.y += ball.vy;
-    drawBall(ball);
+    drawBall();
   }
 
   function clearBall() {
@@ -103,7 +102,6 @@
     ctx.arc(ball.x, ball.y, ball.r, 0, 2 * Math.PI);
     ctx.fill();
     ctx.closePath();
-    return ball;
   }
 
   function initBall() {
@@ -111,10 +109,11 @@
       x: viewWidth >> 1,
       y: viewHeight >> 1,
       r: paddleWidth,
-      vx: getRandomInt(-viewWidth / 30, viewWidth / 30),
-      vy: getRandomInt(-viewHeight / 50, viewHeight / 50)
+      vx: getRandomInt(-viewWidth / 75, viewWidth / 75),
+      vy: getRandomInt(-viewHeight / 75, viewHeight / 75)
     };
   }
+
   function initPaddles() {
     // Initial left and right paddle positions
     leftPaddle = {
